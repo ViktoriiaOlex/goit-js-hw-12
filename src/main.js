@@ -20,7 +20,7 @@ const refs = {
   };
   
   axios.defaults.baseURL = 'https://pixabay.com/api';
-  const API_KEY = '41899926-74a7536d4d492e936dbb67b5b';
+  const API_KEY = '42030436-f44bf17f2fc4b636ae2b8b7a9';
   
   const hiddenClass = 'is-hidden';
   let page = 1;
@@ -42,7 +42,7 @@ const refs = {
     query = refs.form.query.value.trim();
   
     if (!query) {
-      createMessage(
+        showToastMessage(
         `The search field can't be empty! Please, enter your request!`
       );
       return;
@@ -57,7 +57,7 @@ const refs = {
         refs.loadMoreBtn.addEventListener('click', onLoadMore);
       } else {
         refs.loadMoreBtn.classList.add(hiddenClass);
-        createMessage(
+        showToastMessage(
           `Sorry, there are no images matching your search query. Please, try again!`
         );
       }
@@ -68,7 +68,7 @@ const refs = {
       refs.form.reset();
       if (page === maxPage) {
         refs.loadMoreBtn.classList.add(hiddenClass);
-        createMessage(
+        showToastMessage(
           "We're sorry, but you've reached the end of search results!"
         );
       }
@@ -145,7 +145,7 @@ const refs = {
     simplyGallery.refresh();
   }
   
-  function createMessage(message) {
+  function showToastMessage(message) {
     iziToast.show({
       class: 'error-svg',
       position: 'topRight',
