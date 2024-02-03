@@ -26,9 +26,6 @@ const refs = {
   let page = 1;
   let query = '';
 let maxPage = 0;
-  
-// //15 images
-   let perPage = 0;
 
   const simplyGallery = new SimpleLightbox('.gallery-item a', {
     captionsData: 'alt',
@@ -41,8 +38,7 @@ let maxPage = 0;
     event.preventDefault();
     refs.gallery.innerHTML = '';
       page = 1;
-   //15 images
-      let perPage = 15;
+  
 
     refs.loadMoreBtn.classList.add(hiddenClass);
     query = refs.form.query.value.trim();
@@ -115,7 +111,7 @@ let maxPage = 0;
           image_type: 'photo',
           orientation: 'horizontal',
           safesearch: true,
-          per_page: 40,
+          per_page: 15,
           page,
         },
       })
