@@ -16,7 +16,7 @@ const refs = {
     searchBtn: document.querySelector('.search-btn'),
     gallery: document.querySelector('.gallery'),
     loadMoreBtn: document.querySelector('.load-btn'),
-    loader: document.querySelector('.loader'),
+    loader: document.querySelector('.loader-container'),
   };
   
   axios.defaults.baseURL = 'https://pixabay.com/api';
@@ -25,8 +25,11 @@ const refs = {
   const hiddenClass = 'is-hidden';
   let page = 1;
   let query = '';
-  let maxPage = 0;
+let maxPage = 0;
   
+// //15 images
+   let perPage = 0;
+
   const simplyGallery = new SimpleLightbox('.gallery-item a', {
     captionsData: 'alt',
     captionDelay: 250,
@@ -37,7 +40,10 @@ const refs = {
   async function onSearch(event) {
     event.preventDefault();
     refs.gallery.innerHTML = '';
-    page = 1;
+      page = 1;
+   //15 images
+      let perPage = 15;
+
     refs.loadMoreBtn.classList.add(hiddenClass);
     query = refs.form.query.value.trim();
   
@@ -92,7 +98,7 @@ const refs = {
     } finally {
       if (page === maxPage) {
         refs.loadMoreBtn.classList.add(hiddenClass);
-        createMessage(
+        showToastMessage(
           "We're sorry, but you've reached the end of search results!"
         );
       }
