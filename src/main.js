@@ -25,7 +25,7 @@ const refs = {
   const hiddenClass = 'is-hidden';
   let page = 1;
   let query = '';
-let maxPage = 0;
+  let maxPage = 0;
 
   const simplyGallery = new SimpleLightbox('.gallery-item a', {
     captionsData: 'alt',
@@ -39,7 +39,6 @@ let maxPage = 0;
     refs.gallery.innerHTML = '';
       page = 1;
   
-
     refs.loadMoreBtn.classList.add(hiddenClass);
     query = refs.form.query.value.trim();
   
@@ -50,8 +49,8 @@ let maxPage = 0;
       return;
     }
     try {
-      const { hits, total } = await getImages(query);
-      maxPage = Math.ceil(total / 40);
+      const { hits, totalHits } = await getImages(query);
+      maxPage = Math.ceil(totalHits / 15);
       createMarkup(hits, refs.gallery);
   
       if (hits.length > 0) {
@@ -101,10 +100,11 @@ let maxPage = 0;
     }
   }
   
-  async function getImages(query, page = 1) {
+
+async function getImages(query, page = 1) {
     showLoader(true);
-    return axios
-      .get('/', {
+    try {
+      const response = await axios.get('/', {
         params: {
           key: API_KEY,
           q: query,
@@ -114,8 +114,14 @@ let maxPage = 0;
           per_page: 15,
           page,
         },
-      })
-      .then(({ data }) => data);
+      });
+      return response.data;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    } finally {
+      showLoader(false);
+    }
   }
   
   function createMarkup(hits) {
